@@ -1,0 +1,33 @@
+﻿@using EmployeeTaskManagement.ViewModels
+@model UpdateViolationViewModel
+
+@{
+    ViewData["Title"] = "Update task";
+}
+
+<partial name="~/Views/Shared/Common/_BreadCrumbPartial.cshtml" model='("Update Task", "Home", "Update Task")'></partial>
+
+
+<h4>Write your feedback</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateByMember">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Feedback" class="control-label"></label>
+                <textarea asp-for="Feedback" class="form-control" placeholder="Write your feedback....."></textarea>
+                <span asp-validation-for="Feedback" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Details" asp-controller="Project" asp-route-id="@ViewBag.ProjectId">Back to List</a>
+</div>

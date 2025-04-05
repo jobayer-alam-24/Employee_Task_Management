@@ -1,0 +1,63 @@
+﻿@using EmployeeTaskManagement.Data
+@using System.Security.Claims
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext _context
+
+@{
+    string memberId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    var projects = await _context.ProjectMembers.Include(x => x.Project).ThenInclude(x => x.ProjectMembers).ThenInclude(x => x.Member).Where(x => x.MemberId == memberId).ToListAsync();
+}
+<partial name="~/Views/Shared/Common/_BreadCrumbPartial.cshtml" model='("Project", "Home", "Project")'></partial>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Name
+            </th>
+            <th>
+                Members
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in projects)
+        {
+            <tr>
+                <td>
+                    @item.Project.Name
+                </td>
+                <td>
+                    @if (item.Project.ProjectMembers.Any())
+                    {
+                        if (item.Project.ProjectMembers.Count >= 5)
+                        {
+                            @foreach (var member in item.Project.ProjectMembers.Take(5))
+                            {
+                                <span title="@member.Member.Name"><a asp-action="Details" asp-controller="Member" asp-route-id="@member.Id"> @member.Member.Name.ToUpper()[0]@member.Member.Name.ToUpper()[1]</a></span>
+                            }
+                            <span>@(item.Project.ProjectMembers.Count - 5)+</span>
+                        }
+                        else
+                        {
+                            @foreach (var member in item.Project.ProjectMembers)
+                            {
+                                <span title="@member.Member.Name"><a asp-action="Details" asp-controller="Member" asp-route-id="@member.Id"> @member.Member.Name.ToUpper()[0]@member.Member.Name.ToUpper()[1]</a></span>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <p>Not assinged any members.</p>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProjectId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

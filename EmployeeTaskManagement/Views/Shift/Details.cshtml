@@ -1,0 +1,32 @@
+﻿@model EmployeeTaskManagement.Models.Shift
+
+@{
+    ViewData["Title"] = "Details";
+}
+<partial name="~/Views/Shared/Common/_BreadCrumbPartial.cshtml" model='("Shift", "Home", "Shift")'></partial>
+<section class="content">
+    <div class="container">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="card-title">Shift Information</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3 font-weight-bold">Shift Name</dt>
+                    <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+
+                    <dt class="col-sm-3 font-weight-bold">Description</dt>
+                    <dd class="col-sm-9">@Html.Raw(Model.Description)</dd>
+                </dl>
+            </div>
+            <div class="card-footer text-right">
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning btn-sm">
+                    <i class="fa fa-edit"></i> Edit
+                </a>
+                <a asp-action="Index" class="btn btn-secondary btn-sm">
+                    <i class="fa fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

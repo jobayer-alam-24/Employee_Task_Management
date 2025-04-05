@@ -1,0 +1,32 @@
+﻿@model EmployeeTaskManagement.Models.Rule
+
+@{
+    ViewData["Title"] = "Rule Details";
+}
+<partial name="~/Views/Shared/Common/_BreadCrumbPartial.cshtml" model='("Rule", "Home", "Rule")'></partial>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-info text-white text-center rounded-top-4">
+                    <h3 class="mb-0">Rule Details</h3>
+                </div>
+                <div class="card-body p-4">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4 fw-semibold">
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="card-footer text-center bg-light">
+                    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-primary me-2">Edit</a>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

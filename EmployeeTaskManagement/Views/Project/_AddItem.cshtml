@@ -1,0 +1,52 @@
+﻿@using EmployeeTaskManagement.ViewModels
+@model ProjectItemViewModel
+<form asp-action="Create" asp-controller="ProjectItem">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Item.ProjectId" />
+    <div class="form-group">
+        <label asp-for="Item.ShiftId" class="control-label"></label>
+        <select asp-for="Item.ShiftId" class="form-control" asp-items="ViewBag.Shifts">
+        </select>
+        <span asp-validation-for="Item.ShiftId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Name" class="control-label"></label>
+        <input asp-for="Item.Name" class="form-control" />
+        <span asp-validation-for="Item.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Description" class="control-label"></label>
+        <input asp-for="Item.Description" class="form-control" />
+        <span asp-validation-for="Item.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.AssignDate" class="control-label"></label>
+        <input asp-for="Item.AssignDate" class="form-control" type="date" value="@DateTime.Today"/>
+        <span asp-validation-for="Item.AssignDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.WorkingHours" class="control-label"></label>
+        <input asp-for="Item.WorkingHours" class="form-control" />
+        <span asp-validation-for="Item.WorkingHours" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-2">
+        @if (Model.Members.Any())
+        {
+            for (int i = 0; i < Model.Members.Count; i++)
+            {
+                <input type="hidden" asp-for="@Model.Members[i].MemberId" />
+                <label asp-for="@Model.Members[i].IsSelected">
+                    <input type="checkbox" asp-for="@Model.Members[i].IsSelected" />
+                    @Model.Members[i].MemberName
+                </label>
+            }
+        }
+        else
+        {
+            <p>No members are found.</p>
+        }
+    </div>
+    <div class="form-group mt-2">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>

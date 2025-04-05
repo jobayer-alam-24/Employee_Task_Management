@@ -1,0 +1,62 @@
+﻿@model EmployeeTaskManagement.Models.Shift
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@section Styles {
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet" />
+}
+<partial name="~/Views/Shared/Common/_BreadCrumbPartial.cshtml" model='("Shift", "Home", "Shift")'></partial>
+<section class="content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title">Edit Shift</h3>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                            <div class="form-group mb-2">
+                                <label asp-for="Name" class="control-label font-weight-bold mb-2">Shift Name</label>
+                                <input asp-for="Name" class="form-control" placeholder="Enter Shift Name" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label asp-for="Description" class="control-label font-weight-bold mb-2">Description</label>
+                                <textarea id="summernote" asp-for="Description" class="form-control" style="resize: none;" placeholder="Enter Shift Description"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group text-center mb-2">
+                                <input type="submit" value="Save Changes" class="btn btn-success btn-lg" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <a asp-action="Index" class="btn btn-default btn-sm">
+                <i class="fa fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote();
+        });
+    </script>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<EmployeeTaskManagement.Models.RuleViolation>
+
+@{
+    ViewData["Title"] = "Rule Violations";
+}
+<partial name="~/Views/Shared/Common/_BreadCrumbPartial.cshtml" model='("Rule Violation", "Home", "Rule Violation")'></partial>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a asp-action="Create" class="btn btn-success">+ Create New</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle text-center shadow-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.IncidentDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.Point)</th>
+                    <th>@Html.DisplayNameFor(model => model.Note)</th>
+                    <th>@Html.DisplayNameFor(model => model.MemberNote)</th>
+                    <th>@Html.DisplayNameFor(model => model.ReplyStatus)</th>
+                    <th>@Html.DisplayNameFor(model => model.Status)</th>
+                    <th>@Html.DisplayNameFor(model => model.Member)</th>
+                    <th>@Html.DisplayNameFor(model => model.Rule)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.IncidentDate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Point)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Note)</td>
+                        <td>@Html.DisplayFor(modelItem => item.MemberNote)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ReplyStatus)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                        <td>@item.Member?.Name</td>
+                        <td>@item.Rule?.Name</td>
+                        <td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" onclick="return confirm('Are you sure?')" class="btn btn-outline-danger">Delete</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <a asp-action="UpdateByMember" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning">
+                                    @(item.ReplyStatus == RuleViolationReplyStatus.NoReply ? "Write Feedback" : "Update Feedback")
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+﻿@using EmployeeTaskManagement.ViewModels
+@model ProjectCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<partial name="~/Views/Shared/Common/_BreadCrumbPartial.cshtml" model='("Project", "Home", "Project")'></partial>
+
+<section class="content">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="card-title">New Project Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                            <div class="form-group">
+                                <label asp-for="Project.Name" class="control-label font-weight-bold">Project Name</label>
+                                <input asp-for="Project.Name" class="form-control" placeholder="Enter Project Name" />
+                                <span asp-validation-for="Project.Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label asp-for="Project.Title" class="control-label font-weight-bold">Project Title</label>
+                                <input asp-for="Project.Title" class="form-control" placeholder="Enter Project Title" />
+                                <span asp-validation-for="Project.Title" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label class="font-weight-bold">Members</label>
+                                <div>
+                                    @if (Model.Members.Any())
+                                    {
+                                        for (int i = 0; i < Model.Members.Count; i++)
+                                        {
+                                            <div class="form-check">
+                                                <input type="hidden" asp-for="@Model.Members[i].MemberId" />
+                                                <input type="checkbox" asp-for="@Model.Members[i].IsSelected" class="form-check-input" id="member_@Model.Members[i].MemberId" />
+                                                <label class="form-check-label" for="member_@Model.Members[i].MemberId">
+                                                    @Model.Members[i].MemberName
+                                                </label>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p>No members found.</p>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="form-group text-center mt-4">
+                                <input type="submit" value="Create Project" class="btn btn-success btn-lg" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <a asp-action="Index" class="btn btn-secondary btn-sm">
+                <i class="fa fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @Html.RenderPartialAsync("_ValidationScriptsPartial")
+}

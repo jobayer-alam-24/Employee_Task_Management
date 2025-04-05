@@ -1,0 +1,83 @@
+﻿@model IEnumerable<EmployeeTaskManagement.Models.Project>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    span{
+    border-radius: 50%;
+    background-color: #ffd6d6;
+    padding: 5px;
+    height:30px;
+    width:30px;
+    }
+</style>
+<partial name="~/Views/Shared/Common/_BreadCrumbPartial.cshtml" model='("Project", "Home", "Project")'></partial>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+
+@if (User.IsInRole("Admin"))
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.ProjectMembers)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>
+                            @if (item.ProjectMembers.Any())
+                            {
+                                if (item.ProjectMembers.Count >= 5)
+                                {
+                                    @foreach (var member in item.ProjectMembers.Take(5))
+                                    {
+                                        <span title="@member.Member.Name">
+                                            <a asp-action="Details" asp-controller="Member" asp-route-id="@member.Id">
+                                                @member.Member.Name.ToUpper()[0]@member.Member.Name.ToUpper()[1]
+                                            </a>
+                                        </span>
+                                    }
+                                    <span class="plus-count">+@(item.ProjectMembers.Count - 5)</span>
+                                }
+                                else
+                                {
+                                    @foreach (var member in item.ProjectMembers)
+                                    {
+                                        <span title="@member.Member.Name">
+                                            <a asp-action="Details" asp-controller="Member" asp-route-id="@member.Id">
+                                                @member.Member.Name.ToUpper()[0]@member.Member.Name.ToUpper()[1]
+                                            </a>
+                                        </span>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted">No members assigned.</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete this?')" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <partial name="_ProjectList" />
+}

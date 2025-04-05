@@ -1,0 +1,82 @@
+﻿@model EmployeeTaskManagement.Models.RuleViolation
+
+@{
+    ViewData["Title"] = "Edit Rule Violation";
+}
+<partial name="~/Views/Shared/Common/_BreadCrumbPartial.cshtml" model='("Rule Violation", "Home", "Rule Violation")'></partial>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow-lg rounded-4">
+                <div class="card-header bg-primary text-white text-center rounded-top-4">
+                    <h3 class="mb-0">Edit Rule Violation</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="MemberId" class="form-label"></label>
+                            <select asp-for="MemberId" class="form-select" asp-items="ViewBag.MemberId"></select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="RuleId" class="form-label"></label>
+                            <select asp-for="RuleId" class="form-select" asp-items="ViewBag.RuleId"></select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="IncidentDate" class="form-label"></label>
+                            <input asp-for="IncidentDate" type="date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                            <span asp-validation-for="IncidentDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Point" class="form-label"></label>
+                            <input asp-for="Point" class="form-control" />
+                            <span asp-validation-for="Point" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Note" class="form-label"></label>
+                            <input asp-for="Note" class="form-control" />
+                            <span asp-validation-for="Note" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="MemberNote" class="form-label"></label>
+                            <input asp-for="MemberNote" class="form-control" />
+                            <span asp-validation-for="MemberNote" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ReplyStatus" class="form-label"></label>
+                            <select asp-for="ReplyStatus" class="form-select" asp-items="Html.GetEnumSelectList<RuleViolationReplyStatus>()"></select>
+                            <span asp-validation-for="ReplyStatus" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Status" class="form-label"></label>
+                            <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<RuleViolationStatus>()"></select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <input type="submit" value="Save Changes" class="btn btn-success" />
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center bg-light rounded-bottom-4">
+                    <a asp-action="Index" class="btn btn-link decoration-none">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
